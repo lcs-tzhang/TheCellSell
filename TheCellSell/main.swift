@@ -9,139 +9,137 @@
 
 import Foundation
 
+// 1. Input
 
-enum CellSell {
-    case dayTime, eveningTime, weekendTime
-}
+// Get number of daytime minutes
 
-var cost: CellSell = .dayTime
-
+var dayTimeMinutes = 0
 while true {
-    print("Which time period is it? (day/evening/weekend): ", terminator: "")
-    
-    guard let input = readLine()?.lowercased() else {
+
+    // Prompt
+    print("Number of daytime minutes?", terminator: "")
+
+    // Collect input
+    guard let givenInput = readLine() else {
+        // Repeat prompt, no input given
         continue
     }
-    
-    if input == "day" {
-        cost = .dayTime
-        break
-    } else if input == "evening" {
-        cost = .eveningTime
-        break
-    } else if input == "weekend" {
-        cost = .weekendTime
-        break
+
+    // Convert to integer
+    guard let givenInteger = Int(givenInput) else {
+        // Repeat prompt, not an integer
+        continue
     }
+
+    // Check for integer greater than 0
+    guard givenInteger > 0 else {
+        // Repeat prompt, not a positive integer
+        continue
+    }
+
+    // Now we have an integer, break input loop
+    dayTimeMinutes = givenInteger
+    break
 }
 
-let Cost = CellSell.dayTime
-if cost == .dayTime {
-    
-    // 1. Input
-    var dayTimeMinutes = 0
-    while true {
-        print("Number of daytime minutes?", terminator:"")
-        guard let givenInput = readLine(),
-              let givenInteger = Int(givenInput) else { continue }
-        dayTimeMinutes = givenInteger
-        break
+// Get number of evening minutes
+var eveningTimeMinutes = 0
+while true {
+
+    // Prompt
+    print("Number of eveningtime minutes?", terminator: "")
+
+    // Collect input
+    guard let givenInput = readLine() else {
+        continue
     }
 
-    // 2. Process
-    var dayTimeMinutesCostA = 0
-    var dayTimeMinutesCostB = 0
-
-    // Plan A
-    if dayTimeMinutes > 100 {
-        dayTimeMinutesCostA = (dayTimeMinutes - 100) * 25
+    // Convert to integer
+    guard let givenInteger = Int(givenInput) else {
+        continue
     }
 
-    // Plan B
-    if dayTimeMinutes > 250 {
-        dayTimeMinutesCostB = (dayTimeMinutes - 250) * 45
+    // Check for integer greater than 0
+    guard givenInteger > 0 else {
+        continue
     }
 
-    // 3. Output
-    print("Plan A costs \(dayTimeMinutesCostA) whilst Plan B costs \(dayTimeMinutesCostB)")
-
-    if dayTimeMinutesCostA < dayTimeMinutesCostB {
-        print("Plan A is cheaper.")
-    } else if dayTimeMinutesCostB < dayTimeMinutesCostA {
-        print("Plan B is cheaper.")
-    } else {
-        print("Plan A and Plan B cost the same.")
-    }
-
-    
+    eveningTimeMinutes = givenInteger
+    break
 }
 
-else if cost == .eveningTime {
-    
-    // 1. Input
-      var eveningMinutes = 0
-      while true {
-          print("Number of evening minutes?", terminator:"")
-          guard let givenInput = readLine(),
-                let givenInteger = Int(givenInput) else { continue }
-          eveningMinutes = givenInteger
-          break
-      }
-      
-      // 2. Process
-      var eveningCostA = 0
-      var eveningCostB = 0
-      
-      // Plan A
-      eveningCostA = eveningMinutes * 15
-      
-      // Plan B
-      eveningCostB = eveningMinutes * 35
-      
-      // 3. Output
-      print("Plan A costs \(eveningCostA) whilst Plan B costs \(eveningCostB)")
-      
-      if eveningCostA < eveningCostB {
-          print("Plan A is cheaper.")
-      } else if eveningCostB < eveningCostA {
-          print("Plan B is cheaper.")
-      } else {
-          print("Plan A and Plan B cost the same.")
-      }
-  }
-    
+// Get number of weekend minutes
+var weekendTimeMinutes = 0
+while true {
 
-else if cost == .weekendTime {
-    
-    // 1. Input
-        var weekendMinutes = 0
-        while true {
-            print("Number of weekend minutes?", terminator:"")
-            guard let givenInput = readLine(),
-                  let givenInteger = Int(givenInput) else { continue }
-            weekendMinutes = givenInteger
-            break
-        }
-        
-        // 2. Process
-        var weekendCostA = 0
-        var weekendCostB = 0
-        
-        // Plan A
-        weekendCostA = weekendMinutes * 20
-        
-        // Plan B
-        weekendCostB = weekendMinutes * 25
-        
-        // 3. Output
-        print("Plan A costs \(weekendCostA) whilst Plan B costs \(weekendCostB)")
-        
-        if weekendCostA < weekendCostB {
-            print("Plan A is cheaper.")
-        } else if weekendCostB < weekendCostA {
-            print("Plan B is cheaper.")
-        } else {
-            print("Plan A and Plan B cost the same.")
-        }
+    // Prompt
+    print("Number of weekendtime minutes?", terminator: "")
 
+    // Collect input
+    guard let givenInput = readLine() else {
+        continue
+    }
+
+    // Convert to integer
+    guard let givenInteger = Int(givenInput) else {
+        continue
+    }
+
+    // Check for integer greater than 0
+    guard givenInteger > 0 else {
+        continue
+    }
+
+    weekendTimeMinutes = givenInteger
+    break
+}
+
+// 2. Process
+
+// Calculate costs for plan A
+var a = 0
+
+if dayTimeMinutes > 100 {
+    // Add daytime cost
+    a += (dayTimeMinutes - 100) * 25
+    // Add evening cost
+    a += (eveningTimeMinutes) * 15
+    // Add weekend cost
+    a += (weekendTimeMinutes) * 20
+} else {
+    // Daytime cost 0
+    a += 0
+    a += (eveningTimeMinutes) * 15
+    a += (weekendTimeMinutes) * 20
+}
+
+// Calculate costs for plan B
+var b = 0
+
+if dayTimeMinutes > 250 {
+    // Add daytime cost
+    b += (dayTimeMinutes - 250) * 45
+    // Add evening cost
+    b += (eveningTimeMinutes) * 35
+    // Add weekend cost
+    b += (weekendTimeMinutes) * 25
+} else {
+    // Daytime cost 0
+    b += 0
+    b += (eveningTimeMinutes) * 35
+    b += (weekendTimeMinutes) * 25
+}
+
+// 3. Output (format as dollars and cents)
+let aDollars = a / 100
+let aCents = a % 100
+let bDollars = b / 100
+let bCents = b % 100
+
+if a == b {
+    print("Plan A cost \(aDollars).\(aCents). Plan B cost \(bDollars).\(bCents). Plan A and Plan B are the same price.")
+} else if a < b {
+    print("Plan A costs \(aDollars).\(aCents). Plan B cost \(bDollars).\(bCents). Plan A is cheapest.")
+} else if a > b {
+    print("Plan A costs \(aDollars).\(aCents). Plan B cost \(bDollars).\(bCents). Plan B is cheapest.")
 }
